@@ -69,3 +69,5 @@ pact {
         }
     }
 }
+
+pactVerify.dependsOn ':consumer-service:clean',':consumer-service:test'
