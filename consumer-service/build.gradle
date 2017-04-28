@@ -15,3 +15,7 @@ dependencies {
     testCompile 'org.glassfish.jersey.core:jersey-client:2.25'
     testCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.11', version: '3.3.8'
 }
+
+test {
+    systemProperties['pact.rootDir'] = "$rootDir/pacts"
+}
