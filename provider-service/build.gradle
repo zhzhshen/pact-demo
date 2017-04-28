@@ -60,7 +60,7 @@ pact {
             terminateProviderTask = 'stopApp'
 
             hasPactWith('zooProvider') {
-                pactFile = file('../consumer-service/target/pacts/zoo_consumer-zoo_provider.json')
+                pactFile = file("$rootDir/pacts/zoo_consumer-zoo_provider.json")
             }
 
 //            hasPactsWith('manyConsumers') {
