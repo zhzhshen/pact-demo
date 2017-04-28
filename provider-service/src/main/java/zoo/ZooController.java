@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZooController {
     @RequestMapping("/")
     public String index() {
-        return "Zoo index";
+        return "zoo index";
     }
 }

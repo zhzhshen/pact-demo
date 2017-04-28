@@ -2,7 +2,6 @@ group 'com.thoughtworks.giant'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
 apply plugin: 'idea'
 
 repositories {
@@ -12,27 +11,7 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-buildscript {
-    ext {
-        springBootVersion = '1.5.2.RELEASE'
-    }
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
-
-    }
-    dependencies {
-        classpath('com.github.jengelman.gradle.plugins:gradle-processes:0.3.0')
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile 'org.glassfish.jersey.core:jersey-client:2.25'
     testCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.11', version: '3.3.8'
 }

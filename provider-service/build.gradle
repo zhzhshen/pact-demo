@@ -1,0 +1,71 @@
+group 'com.thoughtworks.giant'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+        classpath 'au.com.dius:pact-jvm-provider-gradle_2.11:3.3.8'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'au.com.dius.pact'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.11', version: '3.3.8'
+}
+
+springBoot {
+    mainClass = "zoo.Application"
+}
+
+//todo implement start app & stop app tasks so that we don't have to manually start app before running pactVerify
+//task startApp(dependsOn: 'bootRun') {
+//}
+
+task startApp << {
+    println 'start app'
+}
+
+task stopApp << {
+//    startApp.processHandle.abort()
+    println 'stop app'
+}
+
+pact {
+    serviceProviders {
+        zooProvider {
+            insecure = true
+            protocol = 'http'
+            host = 'localhost'
+            port = 8080
+            path = '/'
+
+            startProviderTask = 'startApp'
+            terminateProviderTask = 'stopApp'
+
+            hasPactWith('zooProvider') {
+                pactFile = file('../consumer-service/target/pacts/zoo_consumer-zoo_provider.json')
+            }
+
+//            hasPactsWith('manyConsumers') {
+//                pactFileLocation = file('../consumer-service/target/pacts')
+//            }
+        }
+    }
+}

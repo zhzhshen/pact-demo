@@ -6,14 +6,14 @@ import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.PactFragment;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 public class ZooConsumerPactTest {
@@ -50,10 +50,10 @@ public class ZooConsumerPactTest {
     public void runTest() {
         Response response = ClientBuilder.newClient().target(BASE_URL).request().get();
         assertEquals(response.getStatus(), 200);
-        assertThat(response.readEntity(String.class), is("zoo index"));
+        MatcherAssert.assertThat(response.readEntity(String.class), CoreMatchers.is("zoo index"));
 
         response = ClientBuilder.newClient().target(BASE_URL + "/animals").request().get();
         assertEquals(response.getStatus(), 200);
-        assertThat(response.readEntity(String.class), is(animalList.toString()));
+        MatcherAssert.assertThat(response.readEntity(String.class), CoreMatchers.is(animalList.toString()));
     }
 }
